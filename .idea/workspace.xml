@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="08c17c04-3a65-4ae6-8126-f0e7113aa58e" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/harmony/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/.idea/harmony.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player.har" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/BuildProfile.ets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/ResourceTable.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/build-profile.json5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/hvigorfile.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/index.ets" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/oh-package-lock.json5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/oh-package.json5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/cpp/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/cpp/RNAudioRecorderPlayerPackage.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/cpp/RNAudioRecorderPlayerTurboModule.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/cpp/RNAudioRecorderPlayerTurboModule.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/RNAudioRecorderPlayerPackage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/RNAudioRecorderPlayerTurboModule.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/audioPlayer/AudioPlayer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/audioPlayer/types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/recorder/Recorder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/recorder/types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/utils/DateTimeUtils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/utils/Logger.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/ets/utils/SaveAudioAsset.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/module.json5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/resources/base/element/string.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/resources/base/media/ic_public_error.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/resources/en_US/element/string.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/src/main/resources/zh_CN/element/string.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/harmony/audio_recorder_player/ts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/index.js.flow" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/NativeAudioRecorderPlayerModule.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/stale.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/code-review.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/publish-package.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.npmignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.buckconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.bundle/config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.eslintrc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.prettierrc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.ruby-version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.watchmanconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/Gemfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/__tests__/App-test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/_node-version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/_BUCK" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/build_defs.bzl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/debug.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/debug/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/debug/java/com/rnaudiorecorderplayer/ReactNativeFlipper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/java/com/rnaudiorecorderplayer/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/java/com/rnaudiorecorderplayer/MainApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/java/com/rnaudiorecorderplayer/newarchitecture/MainApplicationReactNativeHost.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/java/com/rnaudiorecorderplayer/newarchitecture/components/MainComponentsRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/java/com/rnaudiorecorderplayer/newarchitecture/modules/MainApplicationTurboModuleManagerDelegate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/MainApplicationModuleProvider.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/MainApplicationModuleProvider.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/MainApplicationTurboModuleManagerDelegate.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/MainApplicationTurboModuleManagerDelegate.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/MainComponentsRegistry.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/MainComponentsRegistry.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/jni/OnLoad.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/drawable/rn_edit_text_material.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/app/src/main/res/values/styles.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/android/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/babel.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/components/uis/Button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/.xcode.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/Podfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/Podfile.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer.xcodeproj/project.pbxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer.xcodeproj/xcshareddata/xcschemes/RNAudioRecorderPlayer.xcscheme" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer/AppDelegate.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer/AppDelegate.mm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer/Images.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer/Images.xcassets/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer/LaunchScreen.storyboard" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayer/main.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayerTests/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/ios/RNAudioRecorderPlayerTests/RNAudioRecorderPlayerTests.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/metro.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logotype Primary.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/dooboolab.audiorecorderplayer/RNAudioRecorderPlayerModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/dooboolab.audiorecorderplayer/RNAudioRecorderPlayerPackage.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/greenkeeper.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/RNAudioRecorderPlayer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/RNAudioRecorderPlayer.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/RNAudioRecorderPlayer.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/RNAudioRecorderPlayer.xcodeproj/project.pbxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/RNAudioRecorderPlayer.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/issue_template.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2kuuL9wT6TUErVCoU6cIRGzZcAs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用级" UseSingleDictionary="true" transferred="true" />
+</project>

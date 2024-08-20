@@ -9,17 +9,17 @@ matrix:
   #  - env: JOB=IPA
 
   include:
-  # Runs unit tests without emulators.
-  - env: JOB=PR
-    sudo: false
-    language: node_js
-    node_js:
-      - "stable"
-    cache:
-      directories:
-        - node_modules
-    install:
-      - npm install --legacy-peer-deps
+    # Runs unit tests without emulators.
+    - env: JOB=PR
+      sudo: false
+      language: node_js
+      node_js:
+        - "stable"
+      cache:
+        directories:
+          - node_modules
+      install:
+        - npm install --legacy-peer-deps
 
-    script:
-      - npm run lint
+      script:
+        - npm run lint
