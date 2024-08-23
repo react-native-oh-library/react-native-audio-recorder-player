@@ -1,0 +1,9 @@
+{
+	"module": {
+		"name": "audio_recorder_player",
+		"type": "har",
+		"deviceTypes": [
+			"default"
+		],
+	}
+}

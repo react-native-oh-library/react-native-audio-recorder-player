@@ -1,0 +1,2 @@
+string page_show 0x01000000
+media ic_public_error 0x01000001
