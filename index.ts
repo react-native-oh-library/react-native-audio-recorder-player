@@ -1,12 +1,14 @@
-import type {EmitterSubscription} from 'react-native';
+import type { EmitterSubscription } from 'react-native';
 import {
   DeviceEventEmitter,
   NativeEventEmitter,
   NativeModules,
   Platform,
+  TurboModuleRegistry
 } from 'react-native';
 
-const {RNAudioRecorderPlayer} = NativeModules;
+
+const RNAudioRecorderPlayer = TurboModuleRegistry ? require('./src/NativeAudioRecorderPlayerModule').default : NativeModules.RNAudioRecorderPlayer;
 
 export enum AudioSourceAndroidType {
   DEFAULT = 0,
@@ -161,13 +163,13 @@ class AudioRecorderPlayer {
   private _isPlaying: boolean;
   private _hasPaused: boolean;
   private _hasPausedRecord: boolean;
-  private _recorderSubscription: EmitterSubscription;
+  private _recorderSubscription: null | EmitterSubscription;
   private _playerSubscription: EmitterSubscription;
-  private _playerCallback: (event: PlayBackType) => void;
+  private _playerCallback: null | ((event: PlayBackType) => void);
 
-  mmss = (secs: number): string => {
+  mmss = (milisecs: number): string => {
+    let secs = Math.floor(milisecs / 1000)
     let minutes = Math.floor(secs / 60);
-
     secs = secs % 60;
     minutes = minutes % 60;
 
@@ -206,6 +208,21 @@ class AudioRecorderPlayer {
     }
   };
 
+  addListener(name: string, callback: (data: any) => void) {
+    if (Platform.OS === 'android') {
+      this._recorderSubscription = DeviceEventEmitter.addListener(
+        name,
+        callback,
+      );
+    } else {
+      const myModuleEvt = new NativeEventEmitter(RNAudioRecorderPlayer);
+
+      this._recorderSubscription = myModuleEvt.addListener(
+        name,
+        callback,
+      );
+    }
+  }
   /**
    * Remove listener for recorder.
    * @returns {void}
@@ -338,7 +355,7 @@ class AudioRecorderPlayer {
   startPlayer = async (
     uri?: string,
     httpHeaders?: Record<string, string>,
-  ): Promise<string> => {
+  ): Promise<string | undefined> => {
     if (!uri) {
       uri = 'DEFAULT';
     }
@@ -386,7 +403,7 @@ class AudioRecorderPlayer {
    * Pause playing.
    * @returns {Promise<string>}
    */
-  pausePlayer = async (): Promise<string> => {
+  pausePlayer = async (): Promise<string | undefined> => {
     if (!this._isPlaying) {
       return 'No audio playing';
     }
