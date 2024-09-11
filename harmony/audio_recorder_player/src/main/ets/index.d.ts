@@ -22,6 +22,37 @@
  * SOFTWARE.
  */
 
+export enum AudioSourceHarmonyType {
+  DEFAULT = 0,
+  MIC,
+  VOICE_RECOGNITION,
+  VOICE_COMMUNICATION = 7,
+  VOICE_MESSAGE = 10,
+  CAMCORDER = 12,
+}
+
+export enum AudioFormatHarmonyType {
+  MPEG_4 = 'mp4',
+  MPEG_4A = 'm4a',
+  MP3 = 'mp3',
+  WAV = 'wav'
+}
+
+export enum AudioMimeHarmonyType {
+  VIDEO_H263 = 'video/h263', // 表示视频/h263类型。
+  VIDEO_AVC = 'video/avc', // 表示视频/avc类型。
+  VIDEO_MPEG2 = 'video/mpeg2', // 	表示视频/mpeg2类型。
+  VIDEO_MPEG4 = 'video/mp4v-es', // 	表示视频/mpeg4类型。
+  VIDEO_VP8 = 'video/x-vnd.on2.vp8', // 	表示视频/vp8类型。
+  VIDEO_HEVC = 'video/hevc', // 	表示视频/H265类型。
+  AUDIO_AAC = 'audio/mp4a-latm', // 表示音频/mp4a-latm类型。
+
+  AUDIO_VORBIS = 'audio/vorbis', // 	表示音频/vorbis类型。
+  AUDIO_FLAC = 'audio/flac', // 	表示音频/flac类型。
+  AUDIO_MP3 = 'audio/mpeg', // 	表示音频/mpeg类型。
+  AUDIO_G711MU = 'audio/g711mu', // 	表示音频/G711-mulaw类型。
+}
+
 export enum AudioSourceAndroidType {
   DEFAULT = 0,
   MIC,
@@ -151,6 +182,12 @@ export interface AudioSet {
   AudioEncodingBitRateAndroid?: number;
   AudioSamplingRateAndroid?: number;
   AudioChannelsAndroid?: number;
+  AudioSourceHarmony?: AudioSourceHarmonyType;
+  AudioMimeHarmony?: AudioMimeHarmonyType;
+  AudioFileFormatHarmony?: AudioFormatHarmonyType;
+  AudioEncodingBitRateHarmony?: number;
+  AudioSamplingRateHarmony?: number;
+  AudioChannelsHarmony?: number;
 }
 
 export type RecordBackType = {

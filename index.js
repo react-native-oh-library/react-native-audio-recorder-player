@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -34,8 +34,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { DeviceEventEmitter, NativeEventEmitter, NativeModules, Platform, TurboModuleRegistry } from 'react-native';
-var RNAudioRecorderPlayer = TurboModuleRegistry ? require('./src/NativeAudioRecorderPlayerModule').default : NativeModules.RNAudioRecorderPlayer;
+import { DeviceEventEmitter, NativeEventEmitter, NativeModules, Platform, TurboModuleRegistry} from 'react-native';
+var RNAudioRecorderPlayer = TurboModuleRegistry?require('./src/NativeAudioRecorderPlayerModule').default:NativeModules.RNAudioRecorderPlayer;
 export var AudioSourceAndroidType;
 (function (AudioSourceAndroidType) {
     AudioSourceAndroidType[AudioSourceAndroidType["DEFAULT"] = 0] = "DEFAULT";
@@ -128,7 +128,7 @@ var AudioRecorderPlayer = /** @class */ (function () {
     function AudioRecorderPlayer() {
         var _this = this;
         this.mmss = function (milisecs) {
-            let secs = Math.floor(milisecs / 1000)
+            let secs =  Math.floor(milisecs/1000)
             var minutes = Math.floor(secs / 60);
             secs = secs % 60;
             minutes = minutes % 60;
@@ -183,81 +183,71 @@ var AudioRecorderPlayer = /** @class */ (function () {
          * @param {string} uri audio uri.
          * @returns {Promise<string>}
          */
-        this.startRecorder = function (uri, audioSets, meteringEnabled) {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (!this._isRecording) {
-                        this._isRecording = true;
-                        return [2 /*return*/, RNAudioRecorderPlayer.startRecorder(uri !== null && uri !== void 0 ? uri : 'DEFAULT', audioSets, meteringEnabled !== null && meteringEnabled !== void 0 ? meteringEnabled : false)];
-                    }
-                    return [2 /*return*/, 'Already recording'];
-                });
+        this.startRecorder = function (uri, audioSets, meteringEnabled) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (!this._isRecording) {
+                    this._isRecording = true;
+                    return [2 /*return*/, RNAudioRecorderPlayer.startRecorder(uri !== null && uri !== void 0 ? uri : 'DEFAULT', audioSets, meteringEnabled !== null && meteringEnabled !== void 0 ? meteringEnabled : false)];
+                }
+                return [2 /*return*/, 'Already recording'];
             });
-        };
+        }); };
         /**
          * Pause recording.
          * @returns {Promise<string>}
          */
-        this.pauseRecorder = function () {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (!this._hasPausedRecord) {
-                        this._hasPausedRecord = true;
-                        return [2 /*return*/, RNAudioRecorderPlayer.pauseRecorder()];
-                    }
-                    return [2 /*return*/, 'Already paused recording.'];
-                });
+        this.pauseRecorder = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (!this._hasPausedRecord) {
+                    this._hasPausedRecord = true;
+                    return [2 /*return*/, RNAudioRecorderPlayer.pauseRecorder()];
+                }
+                return [2 /*return*/, 'Already paused recording.'];
             });
-        };
+        }); };
         /**
          * Resume recording.
          * @returns {Promise<string>}
          */
-        this.resumeRecorder = function () {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (this._hasPausedRecord) {
-                        this._hasPausedRecord = false;
-                        return [2 /*return*/, RNAudioRecorderPlayer.resumeRecorder()];
-                    }
-                    return [2 /*return*/, 'Currently recording.'];
-                });
+        this.resumeRecorder = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (this._hasPausedRecord) {
+                    this._hasPausedRecord = false;
+                    return [2 /*return*/, RNAudioRecorderPlayer.resumeRecorder()];
+                }
+                return [2 /*return*/, 'Currently recording.'];
             });
-        };
+        }); };
         /**
          * stop recording.
          * @returns {Promise<string>}
          */
-        this.stopRecorder = function () {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (this._isRecording) {
-                        this._isRecording = false;
-                        this._hasPausedRecord = false;
-                        return [2 /*return*/, RNAudioRecorderPlayer.stopRecorder()];
-                    }
-                    return [2 /*return*/, 'Already stopped'];
-                });
+        this.stopRecorder = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (this._isRecording) {
+                    this._isRecording = false;
+                    this._hasPausedRecord = false;
+                    return [2 /*return*/, RNAudioRecorderPlayer.stopRecorder()];
+                }
+                return [2 /*return*/, 'Already stopped'];
             });
-        };
+        }); };
         /**
          * Resume playing.
          * @returns {Promise<string>}
          */
-        this.resumePlayer = function () {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (!this._isPlaying) {
-                        return [2 /*return*/, 'No audio playing'];
-                    }
-                    if (this._hasPaused) {
-                        this._hasPaused = false;
-                        return [2 /*return*/, RNAudioRecorderPlayer.resumePlayer()];
-                    }
-                    return [2 /*return*/, 'Already playing'];
-                });
+        this.resumePlayer = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (!this._isPlaying) {
+                    return [2 /*return*/, 'No audio playing'];
+                }
+                if (this._hasPaused) {
+                    this._hasPaused = false;
+                    return [2 /*return*/, RNAudioRecorderPlayer.resumePlayer()];
+                }
+                return [2 /*return*/, 'Already playing'];
             });
-        };
+        }); };
         this.playerCallback = function (event) {
             if (_this._playerCallback) {
                 _this._playerCallback(event);
@@ -272,104 +262,92 @@ var AudioRecorderPlayer = /** @class */ (function () {
          * @param {Record<string, string>} httpHeaders Set of http headers.
          * @returns {Promise<string>}
          */
-        this.startPlayer = function (uri, httpHeaders) {
-            return __awaiter(_this, void 0, void 0, function () {
-                var myModuleEvt;
-                return __generator(this, function (_a) {
-                    if (!uri) {
-                        uri = 'DEFAULT';
+        this.startPlayer = function (uri, httpHeaders) { return __awaiter(_this, void 0, void 0, function () {
+            var myModuleEvt;
+            return __generator(this, function (_a) {
+                if (!uri) {
+                    uri = 'DEFAULT';
+                }
+                if (!this._playerSubscription) {
+                    if (Platform.OS === 'android') {
+                        this._playerSubscription = DeviceEventEmitter.addListener('rn-playback', this.playerCallback);
                     }
-                    if (!this._playerSubscription) {
-                        if (Platform.OS === 'android') {
-                            this._playerSubscription = DeviceEventEmitter.addListener('rn-playback', this.playerCallback);
-                        }
-                        else {
-                            myModuleEvt = new NativeEventEmitter(RNAudioRecorderPlayer);
-                            this._playerSubscription = myModuleEvt.addListener('rn-playback', this.playerCallback);
-                        }
+                    else {
+                        myModuleEvt = new NativeEventEmitter(RNAudioRecorderPlayer);
+                        this._playerSubscription = myModuleEvt.addListener('rn-playback', this.playerCallback);
                     }
-                    if (!this._isPlaying || this._hasPaused) {
-                        this._isPlaying = true;
-                        this._hasPaused = false;
-                        return [2 /*return*/, RNAudioRecorderPlayer.startPlayer(uri, httpHeaders)];
-                    }
-                    return [2 /*return*/];
-                });
+                }
+                if (!this._isPlaying || this._hasPaused) {
+                    this._isPlaying = true;
+                    this._hasPaused = false;
+                    return [2 /*return*/, RNAudioRecorderPlayer.startPlayer(uri, httpHeaders)];
+                }
+                return [2 /*return*/];
             });
-        };
+        }); };
         /**
          * Stop playing.
          * @returns {Promise<string>}
          */
-        this.stopPlayer = function () {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (this._isPlaying) {
-                        this._isPlaying = false;
-                        this._hasPaused = false;
-                        return [2 /*return*/, RNAudioRecorderPlayer.stopPlayer()];
-                    }
-                    return [2 /*return*/, 'Already stopped playing'];
-                });
+        this.stopPlayer = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (this._isPlaying) {
+                    this._isPlaying = false;
+                    this._hasPaused = false;
+                    return [2 /*return*/, RNAudioRecorderPlayer.stopPlayer()];
+                }
+                return [2 /*return*/, 'Already stopped playing'];
             });
-        };
+        }); };
         /**
          * Pause playing.
          * @returns {Promise<string>}
          */
-        this.pausePlayer = function () {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (!this._isPlaying) {
-                        return [2 /*return*/, 'No audio playing'];
-                    }
-                    if (!this._hasPaused) {
-                        this._hasPaused = true;
-                        return [2 /*return*/, RNAudioRecorderPlayer.pausePlayer()];
-                    }
-                    return [2 /*return*/];
-                });
+        this.pausePlayer = function () { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (!this._isPlaying) {
+                    return [2 /*return*/, 'No audio playing'];
+                }
+                if (!this._hasPaused) {
+                    this._hasPaused = true;
+                    return [2 /*return*/, RNAudioRecorderPlayer.pausePlayer()];
+                }
+                return [2 /*return*/];
             });
-        };
+        }); };
         /**
          * Seek to.
          * @param {number} time position seek to in millisecond.
          * @returns {Promise<string>}
          */
-        this.seekToPlayer = function (time) {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    return [2 /*return*/, RNAudioRecorderPlayer.seekToPlayer(time)];
-                });
+        this.seekToPlayer = function (time) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, RNAudioRecorderPlayer.seekToPlayer(time)];
             });
-        };
+        }); };
         /**
          * Set volume.
          * @param {number} setVolume set volume.
          * @returns {Promise<string>}
          */
-        this.setVolume = function (volume) {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    if (volume < 0 || volume > 1) {
-                        throw new Error('Value of volume should be between 0.0 to 1.0');
-                    }
-                    return [2 /*return*/, RNAudioRecorderPlayer.setVolume(volume)];
-                });
+        this.setVolume = function (volume) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (volume < 0 || volume > 1) {
+                    throw new Error('Value of volume should be between 0.0 to 1.0');
+                }
+                return [2 /*return*/, RNAudioRecorderPlayer.setVolume(volume)];
             });
-        };
+        }); };
         /**
          * Set subscription duration. Default is 0.5.
          * @param {number} sec subscription callback duration in seconds.
          * @returns {Promise<string>}
          */
-        this.setSubscriptionDuration = function (sec) {
-            return __awaiter(_this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    return [2 /*return*/, RNAudioRecorderPlayer.setSubscriptionDuration(sec)];
-                });
+        this.setSubscriptionDuration = function (sec) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, RNAudioRecorderPlayer.setSubscriptionDuration(sec)];
             });
-        };
+        }); };
     }
     return AudioRecorderPlayer;
 }());

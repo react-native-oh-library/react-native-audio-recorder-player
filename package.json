@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dooboolab/react-native-audio-recorder-player"
+    "url": "git+https://github.com/react-native-oh-library/react-native-audio-recorder-player"
   },
   "keywords": [
     "react-native",
@@ -30,6 +30,8 @@
   "files": [
     "src",
     "harmony",
+	  "index.ts",
+	  "index.d.ts",
     "RNAudioRecorderPlayer.podspec"
   ],
   "author": "dooboolab",

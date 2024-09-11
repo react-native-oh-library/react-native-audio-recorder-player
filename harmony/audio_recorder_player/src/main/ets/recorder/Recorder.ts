@@ -1,10 +1,10 @@
 import media from '@ohos.multimedia.media';
-import Logger from '../utils/Logger';
-import SaveAudioAsset from '../utils/SaveAudioAsset';
 import { BusinessError } from '@kit.BasicServicesKit';
 import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
 import { common } from '@kit.AbilityKit';
 import { avConfig, avProfile, AVRecorderState, defaultTimeOut, fdPath, PERMISSIONS, processValue, TAG, } from './types';
+import Logger from '../utils/Logger';
+import SaveAudioAsset from '../utils/SaveAudioAsset';
 
 export default class Recorder {
   public isRecording: boolean = false;
@@ -13,7 +13,7 @@ export default class Recorder {
   private audioRecorder: media.AVRecorder;
   private fdPath: string;
   private timer;
-  private mSaveAudioAsset: SaveAudioAsset = new SaveAudioAsset(TAG);
+  private mSaveAudioAsset: SaveAudioAsset;
   private permissions: Array<Permissions> = [
     PERMISSIONS.MICROPHONE,
     PERMISSIONS.READ_MEDIA,
@@ -25,12 +25,21 @@ export default class Recorder {
   private avProfile: media.AVRecorderProfile;
   private avConfig: media.AVRecorderConfig;
   private startRecordCallback: () => void;
+  private context: common.UIAbilityContext;
 
-  public setAVProfile(newValue: media.AVRecorderProfile) {
+  constructor(context: common.UIAbilityContext) {
+    this.context = context;
+    this.mSaveAudioAsset = new SaveAudioAsset(TAG, context);
+  }
+
+  public setAVProfile(newValue: media.AVRecorderProfile, audioSource?: media.AudioSourceType) {
     this.avProfile = {
       ...avProfile,
       ...newValue,
     };
+    if (audioSource) {
+      avConfig.audioSourceType = audioSource;
+    }
     this.avConfig = {
       ...avConfig,
       profile: this.avProfile,
@@ -43,9 +52,9 @@ export default class Recorder {
 
   // start button process
   async startRecordingProcess(url?: string): Promise<string> {
-    Logger.info(TAG, 'startRecording called', this.recorderState);
+    Logger.debug(TAG, 'startRecording called', this.recorderState);
     if (this.isRecording) {
-      Logger.info(TAG, 'audioRecorder exist,release it');
+      Logger.debug(TAG, 'audioRecorder exist,release it');
       return processValue.stateError;
     }
     const isPermissions: boolean = await this.requestPermissions();
@@ -53,7 +62,7 @@ export default class Recorder {
       await this.getFileFd(url);
       await this.createAudioRecorder();
       await this.prepareAudioRecorder();
-      Logger.info(TAG, 'startRecording done');
+      Logger.debug(TAG, 'startRecording done');
       return this.mSaveAudioAsset.getFilePath();
     }
     return processValue.NoPermissions;
@@ -61,46 +70,46 @@ export default class Recorder {
 
   // pause button process
   async pauseRecordingProcess(): Promise<string | undefined> {
-    Logger.info(TAG, 'pauseRecording called');
+    Logger.debug(TAG, 'pauseRecording called');
     if (this.recorderState === AVRecorderState.started) {
-      Logger.info(TAG, 'current state is started, to pause');
+      Logger.debug(TAG, 'current state is started, to pause');
       return this.audioRecorder.pause().then(() => processValue.pause);
     }
-    Logger.info(TAG, 'pauseRecording done');
+    Logger.debug(TAG, 'pauseRecording done');
     return processValue.stateError;
   }
 
   // resume button process
   async resumeRecordingProcess(): Promise<string | undefined> {
-    Logger.info(TAG, 'resumeRecording called');
+    Logger.debug(TAG, 'resumeRecording called');
     if (this.recorderState === AVRecorderState.paused) {
-      Logger.info(TAG, 'current state is paused, to resume');
+      Logger.debug(TAG, 'current state is paused, to resume');
       this.isRecording = true;
       return this.audioRecorder.resume().then(() => processValue.resume);
     }
-    Logger.info(TAG, 'resumeRecording done');
+    Logger.debug(TAG, 'resumeRecording done');
     return processValue.stateError;
   }
 
   // stop button process
   async stopRecordingProcess(): Promise<string | undefined> {
-    Logger.info(TAG, 'stopRecording called');
+    Logger.debug(TAG, 'stopRecording called');
     clearInterval(this.timer);
     this.isRecording = false;
     this.milliseconds = 0;
     await this.audioRecorder.stop();
-    Logger.info(TAG, 'stopRecording stop');
+    Logger.debug(TAG, 'stopRecording stop');
     await this.closeFd();
-    Logger.info(TAG, 'stopRecording closeFd');
+    Logger.debug(TAG, 'stopRecording closeFd');
     await this.resetAudioRecording();
-    Logger.info(TAG, 'stopRecording reset');
+    Logger.debug(TAG, 'stopRecording reset');
     await this.releaseAudioRecorder();
-    Logger.info(TAG, 'stopRecording release');
+    Logger.debug(TAG, 'stopRecording release');
     return this.getFilePath();
   }
 
   private async catchCallback(error: BusinessError): Promise<void> {
-    Logger.info(
+    Logger.debug(
       TAG,
       `catchCallback code:${error.code} message：${error.message}`,
     );
@@ -109,7 +118,7 @@ export default class Recorder {
   private async requestPermissions(): Promise<boolean> {
     return await new Promise((resolve: Function) => {
       try {
-        const context = getContext() as common.UIAbilityContext;
+        const context = this.context as common.UIAbilityContext;
         this.atManager
           .requestPermissionsFromUser(context, this.permissions)
           .then(async () => {
@@ -133,23 +142,24 @@ export default class Recorder {
 
   // create file fd
   private async getFileFd(url?: string): Promise<void> {
-    Logger.info(TAG, 'getFileFd called');
+    Logger.debug(TAG, 'getFileFd called');
     return new Promise(async (resolve, reject) => {
       if (url && url.startsWith(fdPath)) {
         this.avConfig.url = url;
-        Logger.info(TAG, 'url is :', url);
+        Logger.debug(TAG, 'url is :', url);
         resolve();
         return;
       }
-      this.mFileAssetId = await this.mSaveAudioAsset.createAudioFd();
+      this.mFileAssetId = await this.mSaveAudioAsset.createAudioFd(url,
+        this.avConfig?.profile?.fileFormat || media.ContainerFormatType.CFT_MPEG_4A);
       if (!this.mFileAssetId) {
         reject();
         return;
       }
       this.fdPath = fdPath + this.mFileAssetId.toString();
       this.avConfig.url = this.fdPath;
-      Logger.info(TAG, 'fdPath is: ' + this.fdPath);
-      Logger.info(TAG, 'getFileFd done');
+      Logger.debug(TAG, 'fdPath is: ' + this.fdPath);
+      Logger.debug(TAG, 'getFileFd done');
       resolve();
     });
   }
@@ -158,12 +168,12 @@ export default class Recorder {
     await media
       .createAVRecorder()
       .then((recorder) => {
-        Logger.info(TAG, 'case createAVRecorder called');
+        Logger.debug(TAG, 'case createAVRecorder called');
         if (!!recorder) {
           this.audioRecorder = recorder;
           this.setCallback();
         } else {
-          Logger.info(TAG, 'case create avRecorder failed!!!');
+          Logger.debug(TAG, 'case create avRecorder failed!!!');
         }
       })
       .catch(this.catchCallback);
@@ -171,11 +181,11 @@ export default class Recorder {
 
   // set callback on
   private setCallback(): void {
-    Logger.info(TAG, 'case callback');
+    Logger.debug(TAG, 'case callback');
     this.audioRecorder!.on(
       AVRecorderState.onStateChange,
       (state: media.AVRecorderState) => {
-        Logger.info(TAG, 'case state has changed, new state is' + state);
+        Logger.debug(TAG, 'case state has changed, new state is' + state);
         switch (state) {
           case AVRecorderState.idle: {
             this.recorderState = AVRecorderState.idle;
@@ -187,7 +197,9 @@ export default class Recorder {
           }
           case AVRecorderState.started: {
             this.recorderState = AVRecorderState.started;
-            this.startRecordCallback();
+            if (this.startRecordCallback) {
+              this.startRecordCallback();
+            }
             this.getRecordTime();
             this.isRecording = true;
             break;
@@ -209,35 +221,35 @@ export default class Recorder {
             break;
           }
           default:
-            Logger.info(TAG, 'case start is unknown');
+            Logger.debug(TAG, 'case start is unknown');
             break;
         }
       },
     );
     this.audioRecorder!.on(AVRecorderState.error, (err) => {
       this.stopRecordingProcess();
-      Logger.info(
+      Logger.debug(
         TAG,
-        'case avRecorder.on(error) called, errMessage is ' + err.message,
+        'case avRecorder.on(error) called, errMessage is ' + err.code,
       );
     });
   }
 
   private async prepareAudioRecorder(): Promise<void> {
-    Logger.info(TAG, 'case prepareAudioRecorder in');
+    Logger.debug(TAG, 'case prepareAudioRecorder in');
     await this.audioRecorder!.prepare(this.avConfig)
       .then(() => {
         this.audioRecorder!.start();
-        Logger.info(TAG, 'case prepare AVRecorder called');
+        Logger.debug(TAG, 'case prepare AVRecorder called');
       }, this.catchCallback)
       .catch(this.catchCallback);
-    Logger.info(TAG, 'case prepareAudioRecorder out');
+    Logger.debug(TAG, 'case prepareAudioRecorder out');
   }
 
   private async resetAudioRecording(): Promise<void> {
     await this.audioRecorder!.reset()
       .then(() => {
-        Logger.info(TAG, 'case resetAudioRecording called');
+        Logger.debug(TAG, 'case resetAudioRecording called');
       }, this.catchCallback)
       .catch(this.catchCallback);
   }
@@ -250,7 +262,7 @@ export default class Recorder {
         .release()
         .then(() => {
           this.audioRecorder = undefined;
-          Logger.info(TAG, 'case releaseAudioRecorder called');
+          Logger.debug(TAG, 'case releaseAudioRecorder called');
         }, this.catchCallback)
         .catch(this.catchCallback);
     }
@@ -258,17 +270,24 @@ export default class Recorder {
 
   // close file fd
   private async closeFd(): Promise<void> {
-    Logger.info(TAG, 'case closeFd called');
+    Logger.debug(TAG, 'case closeFd called');
     if (this.fdPath) {
       this.mSaveAudioAsset.closeFile();
       this.mFileAssetId = -1;
       this.fdPath = '';
-      Logger.info(TAG, 'case closeFd done');
+      Logger.debug(TAG, 'case closeFd done');
     }
   }
 
   private getFilePath(): string {
-    const context = getContext() as common.UIAbilityContext;
+    const context = this.context as common.UIAbilityContext;
     return `${context.filesDir}/${this.mSaveAudioAsset.getFileName()}`;
+  }
+
+  public getMaxAmplitude(): Promise<number> {
+    if (!this.audioRecorder) {
+      return new Promise((resolve) => resolve(0));
+    }
+    return this.audioRecorder.getAudioCapturerMaxAmplitude();
   }
 }

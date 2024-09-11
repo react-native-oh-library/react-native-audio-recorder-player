@@ -1,1 +1,20 @@
-{"license":"ISC","types":"","devDependencies":{},"name":"@react-native-oh-tpl/react-native-audio-recorder-player","description":"","main":"index.ets","version":"3.6.10-0.0.1","dependencies":{"@rnoh/react-native-openharmony":"file:../react_native_openharmony"},"metadata":{"sourceRoots":["./src/main"]},"compatibleSdkVersion":12,"compatibleSdkType":"HarmonyOS","obfuscated":false}
+{
+  "license": "ISC",
+  "types": "",
+  "devDependencies": {},
+  "name": "@react-native-oh-tpl/react-native-audio-recorder-player",
+  "description": "",
+  "main": "index.ets",
+  "version": "3.6.10-0.0.1",
+  "dependencies": {
+    "@rnoh/react-native-openharmony": "file:../libs/react_native_openharmony-5.0.0.500.har"
+  },
+  "metadata": {
+    "sourceRoots": [
+      "./src/main"
+    ]
+  },
+  "compatibleSdkVersion": '12',
+  "compatibleSdkType": "HarmonyOS",
+  "obfuscated": false
+}

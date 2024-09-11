@@ -1,9 +1,9 @@
 import media from '@ohos.multimedia.media';
-import SaveAudioAsset from '../utils/SaveAudioAsset';
-import Logger from '../utils/Logger';
 import { BusinessError } from '@kit.BasicServicesKit';
 import fs from '@ohos.file.fs';
 import { common } from '@kit.AbilityKit';
+import SaveAudioAsset from '../utils/SaveAudioAsset';
+import Logger from '../utils/Logger';
 import { AVPlayerState, EventTarget, pathStartWith, processValue, TAG, } from './types';
 import { fdPath } from '../recorder/types';
 
@@ -15,10 +15,15 @@ export default class Player {
   public durationTime: number = 0;
   public PlayerState: AVPlayerState;
   private audioPlayer: media.AVPlayer;
-  private audioPlayer: media.AVPlayer;
-  private AudioAsset = new SaveAudioAsset(TAG);
+  private AudioAsset: SaveAudioAsset;
   private playUrl: string;
   private EventMap: Map<string, any> = new Map();
+  private context: common.UIAbilityContext;
+
+  constructor(context: common.UIAbilityContext) {
+    this.context = context;
+    this.AudioAsset = new SaveAudioAsset(TAG, context);
+  }
 
   public onEvent(name: string, callback: () => void) {
     if (this.EventMap.has(name)) {
@@ -79,48 +84,54 @@ export default class Player {
   }
 
   // start button process
-  async startPlayeringProcess(url?: string): Promise<string> {
-    Logger.info(TAG, 'startPlayering called');
+  async startPlayeringProcess(url?: string, httpHeaders?: Record<string, string>): Promise<string> {
+    Logger.debug(TAG, 'startPlayering called');
     if (this.isPlaying || this.PlayerState === AVPlayerState.paused) {
       return;
     }
-    await this.createAudioPlayer();
-    await this.setAudioPlayerUrl(url);
-    Logger.info(TAG, 'startPlayering done');
-    return this.playUrl;
+    try {
+      await this.createAudioPlayer();
+      await this.setAudioPlayerUrl(url, httpHeaders);
+      Logger.debug(TAG, 'startPlayering done');
+      return this.playUrl;
+    } catch (err) {
+      Logger.error(TAG, `startPlayering fail code:${(err as BusinessError).code}`);
+      this.stopPlayeringProcess();
+      return this.playUrl;
+    }
   }
 
   // pause button process
   async pausePlayeringProcess(): Promise<string> {
-    Logger.info(TAG, 'pausePlayering called');
+    Logger.debug(TAG, 'pausePlayering called');
     if (this.PlayerState === AVPlayerState.playing) {
-      Logger.info(TAG, 'current state is playing, to pause');
+      Logger.debug(TAG, 'current state is playing, to pause');
       return this.handelPlayerFunc(
         this.audioPlayer.pause(),
         processValue.pause,
       );
     }
-    Logger.info(TAG, 'pausePlayering done');
+    Logger.debug(TAG, 'pausePlayering done');
     return processValue.stateError;
   }
 
   async resumePlayeringProcess(): Promise<string> {
-    Logger.info(TAG, ' resumePlayering called');
+    Logger.debug(TAG, ' resumePlayering called');
     if (this.PlayerState === AVPlayerState.paused) {
-      Logger.info(TAG, 'current state is paused, to  resume');
+      Logger.debug(TAG, 'current state is paused, to  resume');
       this.seekToPlayerTime(this.currentPosition).then(() => {
         this.getCurrentPosition();
         this.audioPlayer.play();
         return processValue.resume;
       });
     }
-    Logger.info(TAG, ' resumePlayering done');
+    Logger.debug(TAG, ' resumePlayering done');
     return processValue.stateError;
   }
 
   // stop button process
   async stopPlayeringProcess(): Promise<string> {
-    Logger.info(TAG, 'stopPlayering called');
+    Logger.debug(TAG, 'stopPlayering called');
     if (!this.isHandleState()) {
       return processValue.stateError;
     }
@@ -130,19 +141,19 @@ export default class Player {
     await this.resetAudioPlayering();
     await this.stopAudioPlayering();
     await this.releaseAudioPlayer();
-    Logger.info(TAG, 'stopPlayering done');
+    Logger.debug(TAG, 'stopPlayering done');
     return this.playUrl;
   }
 
   private async failureCallback(error: BusinessError): Promise<void> {
-    Logger.info(
+    Logger.debug(
       TAG,
       `failureCallback code:${error.code} message：${error.message}`,
     );
   }
 
   private async catchCallback(error: BusinessError): Promise<void> {
-    Logger.info(
+    Logger.debug(
       TAG,
       `catchCallback code:${error.code} message：${error.message}`,
     );
@@ -150,14 +161,14 @@ export default class Player {
 
   private getDurationTime() {
     this.audioPlayer.on(EventTarget.durationUpdate, (duration: number) => {
-      Logger.info(TAG, 'durationUpdate called,new duration is :' + duration);
+      Logger.debug(TAG, 'durationUpdate called,new duration is :' + duration);
       this.durationTime = duration;
     });
   }
 
   private getCurrentPosition() {
     this.audioPlayer.on(EventTarget.timeUpdate, (time: number) => {
-      Logger.info(TAG, 'timeUpdate called,and new time is :' + time);
+      Logger.debug(TAG, 'timeUpdate called,and new time is :' + time);
       this.currentPosition = time;
       this.isFinished = this.currentPosition === this.durationTime;
     });
@@ -170,7 +181,11 @@ export default class Player {
     return new Promise((resolve) => {
       this.audioPlayer.setVolume(volume);
       this.audioPlayer.on(EventTarget.volumeChange, (vol: number) => {
-        resolve(vol.toFixed(1));
+        if (vol >= 0) {
+          resolve(vol.toFixed(1));
+        } else {
+          resolve('');
+        }
         this.audioPlayer.off(EventTarget.volumeChange);
       });
     });
@@ -183,11 +198,11 @@ export default class Player {
     await media
       .createAVPlayer()
       .then((player) => {
-        Logger.info(TAG, 'case createAVPlayer called');
+        Logger.debug(TAG, 'case createAVPlayer called');
         if (!!Player) {
           this.audioPlayer = player;
         } else {
-          Logger.info(TAG, 'case create avPlayer failed!!!');
+          Logger.debug(TAG, 'case create avPlayer failed!!!');
           return;
         }
       }, this.failureCallback)
@@ -197,9 +212,9 @@ export default class Player {
 
   // set callback on
   private setCallback(): void {
-    Logger.info(TAG, 'case callback');
+    Logger.debug(TAG, 'case callback');
     this.audioPlayer!.on(EventTarget.stateChange, async (state, reason) => {
-      Logger.info(
+      Logger.debug(
         TAG,
         'case state has changed, new state is  ' + state + 'reason: ' + reason,
       );
@@ -258,28 +273,40 @@ export default class Player {
           break;
         }
         default:
-          Logger.info(TAG, 'case start is unknown');
+          Logger.debug(TAG, 'case start is unknown');
           break;
       }
     });
     this.audioPlayer!.on(EventTarget.error, async (err) => {
       this.audioPlayer.reset();
       this.stopPlayeringProcess();
-      Logger.info(
+      Logger.debug(
         TAG,
         'case avPlayer.on(error) called, errMessage is ' + err.message,
       );
     });
   }
 
-  private async setAudioPlayerUrl(url?: string) {
-    Logger.info(TAG, 'url is ', url);
+  private async setAudioPlayerUrl(url?: string, httpHeaders?: Record<string, string>): Promise<void> {
+    Logger.debug(TAG, 'url is ', url);
     if (pathStartWith.some((item) => url.startsWith(item))) {
+      if (!url?.startsWith(fdPath) && httpHeaders) {
+        this.playUrl = url;
+        let mediaSource: media.MediaSource = media.createMediaSourceWithUrl(this.playUrl, httpHeaders);
+        let playStrategy: media.PlaybackStrategy = {
+          preferredWidth: 1,
+          preferredHeight: 1,
+          preferredBufferDuration: 3,
+          preferredHdr: false
+        };
+        this.audioPlayer.setMediaSource(mediaSource, playStrategy);
+        return;
+      }
       this.audioPlayer.url = url;
       this.playUrl = url;
       return;
     }
-    const lastUrl = this.getFileList();
+    const lastUrl = this.getFileList(url);
     if (lastUrl) {
       this.audioPlayer.url = fdPath + lastUrl;
       return;
@@ -298,48 +325,60 @@ export default class Player {
     });
   }
 
-  private getFileList(): number {
-    const context = getContext() as common.UIAbilityContext;
+  private getFileList(url?: string): number {
+    const context = this.context as common.UIAbilityContext;
     const path = context.filesDir;
-    const fileList: string[] = fs.listFileSync(path) ?? [];
-    const audioList = fileList.filter((item: string) =>
-    item.endsWith(media.ContainerFormatType.CFT_MPEG_4A),
-    );
-    const last = audioList.pop();
-    Logger.info(TAG, last);
-    if (last) {
-      this.playUrl = `${path}/${last}`;
+    let isExist = false;
+    if (url && url !== 'DEFAULT') {
+      isExist = fs.accessSync(`${path}/${url}`);
+    }
+    if (url && url === 'DEFAULT') {
+      isExist = fs.accessSync(`${path}/${'sound.m4a'}`);
+    }
+    if (isExist) {
+      this.playUrl = `${path}/${url}`;
       const file = fs.openSync(this.playUrl);
-      Logger.info(TAG, 'last file path ', last);
       return file.fd;
+    } else {
+      const fileList: string[] = fs.listFileSync(path) ?? [];
+      const audioList = fileList.filter((item: string) => item.endsWith(media.ContainerFormatType.CFT_MPEG_4A));
+      const last = audioList.pop();
+      Logger.debug(TAG, last);
+      if (last) {
+        this.playUrl = `${path}/${last}`;
+        const file = fs.openSync(this.playUrl);
+        Logger.debug(TAG, 'last file path ', last);
+        return file.fd;
+      }
+      return null;
     }
   }
 
   private async prepareAudioPlayer(): Promise<void> {
-    Logger.info(TAG, 'case prepareAudioPlayer in');
+    Logger.debug(TAG, 'case prepareAudioPlayer in');
     await this.audioPlayer!.prepare()
       .then(() => {
-        Logger.info(TAG, 'case prepare AVPlayer called');
+        Logger.debug(TAG, 'case prepare AVPlayer called');
         this.startAudioPlayering();
       }, this.failureCallback)
       .catch(this.catchCallback);
-    Logger.info(TAG, 'case prepareAudioPlayer out');
+    Logger.debug(TAG, 'case prepareAudioPlayer out');
   }
 
   private async startAudioPlayering(): Promise<void> {
-    Logger.info(TAG, 'case startAudioPlayering called');
+    Logger.debug(TAG, 'case startAudioPlayering called');
     await this.audioPlayer!.play()
       .then(() => {
-        Logger.info(TAG, 'case start AudioPlayer called');
+        Logger.debug(TAG, 'case start AudioPlayer called');
       }, this.failureCallback)
       .catch(this.catchCallback);
   }
 
   private async stopAudioPlayering(): Promise<void> {
-    Logger.info(TAG, 'case stopAudioPlayering called');
+    Logger.debug(TAG, 'case stopAudioPlayering called');
     await this.audioPlayer!.stop()
       .then(() => {
-        Logger.info(TAG, 'case stop AudioPlayer called');
+        Logger.debug(TAG, 'case stop AudioPlayer called');
       }, this.failureCallback)
       .catch(this.catchCallback);
   }
@@ -347,7 +386,7 @@ export default class Player {
   private async resetAudioPlayering(): Promise<void> {
     await this.audioPlayer!.reset()
       .then(() => {
-        Logger.info(TAG, 'case resetAudioPlayering called');
+        Logger.debug(TAG, 'case resetAudioPlayering called');
       }, this.failureCallback)
       .catch(this.catchCallback);
   }
@@ -360,7 +399,7 @@ export default class Player {
       await this.audioPlayer
         .release()
         .then(() => {
-          Logger.info(TAG, 'case releaseAudioPlayer called');
+          Logger.debug(TAG, 'case releaseAudioPlayer called');
         }, this.failureCallback)
         .catch(this.catchCallback);
       this.audioPlayer = undefined;
