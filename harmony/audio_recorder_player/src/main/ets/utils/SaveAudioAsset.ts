@@ -18,6 +18,8 @@ import Logger from './Logger';
 import fs from '@ohos.file.fs';
 import { common } from '@kit.AbilityKit';
 import audio from '@ohos.multimedia.audio';
+import { uri } from '@kit.ArkTS';
+import { media } from '@kit.MediaKit';
 
 export default class SaveCameraAsset {
   public file: fs.File;
@@ -32,20 +34,33 @@ export default class SaveCameraAsset {
       audio.DEFAULT_VOLUME_GROUP_ID,
     );
   private fileName: string;
+  private context: common.UIAbilityContext;
 
-  constructor(tag: string) {
+  constructor(tag: string, context: common.UIAbilityContext) {
     this.tag = tag;
+    this.context = context;
   }
 
-  public async createAudioFd(): Promise<number> {
+  public async createAudioFd(url?: string, fileFormat?: media.ContainerFormatType): Promise<number> {
     Logger.info(this.tag, 'get Recorder File Fd');
-    const mDateTimeUtil = new DateTimeUtil();
-    const displayName = this.checkName(
-      `REC_${mDateTimeUtil.getDate()}_${mDateTimeUtil.getTime()}.m4a`,
-    );
-    const context = getContext() as common.UIAbilityContext;
-    const path = `${context.filesDir}/${displayName}`;
-    this.fileName = displayName;
+    const context = this.context as common.UIAbilityContext;
+    let path = '';
+    if (uri) {
+      path = `${context.filesDir}/${url}`;
+      this.fileName = url;
+      if (url === 'DEFAULT') {
+        path = `${context.filesDir}/${'sound.'}${fileFormat ? fileFormat : media.ContainerFormatType.CFT_MPEG_4A}`;
+        this.fileName = `${'sound.'}${fileFormat ? fileFormat : media.ContainerFormatType.CFT_MPEG_4A}`;
+      }
+    } else {
+      const mDateTimeUtil = new DateTimeUtil();
+      const displayName = this.checkName(
+        `REC_${mDateTimeUtil.getDate()}_${mDateTimeUtil.getTime()}.m4a`,
+      );
+      path = `${context.filesDir}/${displayName}`;
+      this.fileName = displayName;
+    }
+
     this.file = this.createOrOpen(path);
     return this.file?.fd ?? 0;
   }
@@ -60,10 +75,6 @@ export default class SaveCameraAsset {
 
   public mediaIsMute(): boolean {
     return this.audioVolumeGroupManager.isMuteSync(audio.AudioVolumeType.MEDIA);
-  }
-
-  public closeFile() {
-    fs.closeSync(this.file);
   }
 
   public closeFile() {

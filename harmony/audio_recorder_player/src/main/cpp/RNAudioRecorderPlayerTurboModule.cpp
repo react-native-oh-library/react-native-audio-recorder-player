@@ -27,59 +27,64 @@
 
 using namespace rnoh;
 using namespace facebook;
-static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addRecordBackListener(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addRecordBackListener(
+    jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
     return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "addRecordBackListener", args, count);
 }
-static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeRecordBackListener(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeRecordBackListener(
+    jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
     return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "removeRecordBackListener", args, count);
 }
 
-static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addPlayBackListener(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addPlayBackListener(
+    jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
     return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "addPlayBackListener", args, count);
 }
 
-static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removePlayBackListener(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removePlayBackListener(
+    jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
     return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "removePlayBackListener", args, count);
 }
 
-static jsi::Value _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addListener(
-    jsi::Runtime &rt,
-    react::TurboModule & turboModule,
-    const jsi::Value* args,
-    size_t count)
-    {
-        return jsi::Value(static_cast<ArkTSTurboModule &> (turboModule).call(rt,"addListener", args, count));
-    }
+static jsi::Value _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addListener(jsi::Runtime &rt,
+                                                                                    react::TurboModule &turboModule,
+                                                                                    const jsi::Value *args,
+                                                                                    size_t count) {
+    return jsi::Value(static_cast<ArkTSTurboModule &>(turboModule).call(rt, "addListener", args, count));
+}
 
-static jsi::Value _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeListeners(
-    jsi::Runtime &rt,
-    react::TurboModule & turboModule,
-    const jsi::Value* args,
-    size_t count)
-    {
-        return jsi::Value(static_cast<ArkTSTurboModule &> (turboModule).call(rt,"removeListeners", args, count));
-    }
+static jsi::Value _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeListeners(jsi::Runtime &rt,
+                                                                                        react::TurboModule &turboModule,
+                                                                                        const jsi::Value *args,
+                                                                                        size_t count) {
+    return jsi::Value(static_cast<ArkTSTurboModule &>(turboModule).call(rt, "removeListeners", args, count));
+}
 
-RNAudioRecorderPlayerTurboModuleSpecJSI::RNAudioRecorderPlayerTurboModuleSpecJSI(const ArkTSTurboModule::Context ctx, const std::string name)
+RNAudioRecorderPlayerTurboModuleSpecJSI::RNAudioRecorderPlayerTurboModuleSpecJSI(const ArkTSTurboModule::Context ctx,
+                                                                                 const std::string name)
     : ArkTSTurboModule(ctx, name) {
-     methodMap_ = {
-        ARK_ASYNC_METHOD_METADATA(startRecorder, 2),
-        ARK_ASYNC_METHOD_METADATA(pauseRecorder,0 ),
+    methodMap_ = {
+        ARK_ASYNC_METHOD_METADATA(startRecorder, 3),
+        ARK_ASYNC_METHOD_METADATA(pauseRecorder, 0),
         ARK_ASYNC_METHOD_METADATA(resumeRecorder, 0),
         ARK_ASYNC_METHOD_METADATA(stopRecorder, 0),
         ARK_ASYNC_METHOD_METADATA(resumePlayer, 0),
-        ARK_ASYNC_METHOD_METADATA(startPlayer, 1),
-        ARK_ASYNC_METHOD_METADATA(stopPlayer,0 ),
+        ARK_ASYNC_METHOD_METADATA(startPlayer, 2),
+        ARK_ASYNC_METHOD_METADATA(stopPlayer, 0),
         ARK_ASYNC_METHOD_METADATA(pausePlayer, 0),
         ARK_ASYNC_METHOD_METADATA(seekToPlayer, 1),
         ARK_ASYNC_METHOD_METADATA(setVolume, 1),
         ARK_ASYNC_METHOD_METADATA(setSubscriptionDuration, 1),
     };
-    methodMap_["addRecordBackListener"] = MethodMetadata{1, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addRecordBackListener};
-    methodMap_["removeRecordBackListener"] = MethodMetadata{0, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeRecordBackListener};
-    methodMap_["addPlayBackListener"] = MethodMetadata{1, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addPlayBackListener};
-    methodMap_["removePlayBackListener"] = MethodMetadata{0, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removePlayBackListener};
-    methodMap_["addListener"]= MethodMetadata{1, _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addListener};
-    methodMap_["removeListeners"]= MethodMetadata{1, _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeListeners};
-   
+    methodMap_["addRecordBackListener"] =
+        MethodMetadata{1, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addRecordBackListener};
+    methodMap_["removeRecordBackListener"] =
+        MethodMetadata{0, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeRecordBackListener};
+    methodMap_["addPlayBackListener"] =
+        MethodMetadata{1, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addPlayBackListener};
+    methodMap_["removePlayBackListener"] =
+        MethodMetadata{0, __hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removePlayBackListener};
+    methodMap_["addListener"] = MethodMetadata{1, _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_addListener};
+    methodMap_["removeListeners"] =
+        MethodMetadata{1, _hostFunction_RNAudioRecorderPlayerTurboModuleSpecJSI_removeListeners};
 }

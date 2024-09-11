@@ -10,6 +10,31 @@ import {
 
 const RNAudioRecorderPlayer = TurboModuleRegistry ? require('./src/NativeAudioRecorderPlayerModule').default : NativeModules.RNAudioRecorderPlayer;
 
+export enum AudioSourceHarmonyType {
+  DEFAULT = 0,
+  MIC,
+  VOICE_RECOGNITION,
+  VOICE_COMMUNICATION = 7,
+  VOICE_MESSAGE = 10,
+  CAMCORDER = 12,
+}
+
+export enum AudioFormatHarmonyType {
+  MPEG_4 = 'mp4',
+  MPEG_4A = 'm4a',
+  MP3 = 'mp3',
+  WAV = 'wav'
+}
+
+export enum AudioMimeHarmonyType {
+  AUDIO_AAC = 'audio/mp4a-latm', // 表示音频/mp4a-latm类型。
+
+  AUDIO_VORBIS = 'audio/vorbis',	// 	表示音频/vorbis类型。
+  AUDIO_FLAC = 'audio/flac',	// 	表示音频/flac类型。
+  AUDIO_MP3 = 'audio/mpeg',	// 	表示音频/mpeg类型。
+  AUDIO_G711MU = 'audio/g711mu',	// 	表示音频/G711-mulaw类型。
+}
+
 export enum AudioSourceAndroidType {
   DEFAULT = 0,
   MIC,
@@ -139,6 +164,49 @@ export interface AudioSet {
   AudioEncodingBitRateAndroid?: number;
   AudioSamplingRateAndroid?: number;
   AudioChannelsAndroid?: number;
+  AudioSourceHarmony?: AudioSourceHarmonyType;
+  AudioMimeHarmony?: AudioMimeHarmonyType;
+  AudioFileFormatHarmony?: AudioFormatHarmonyType;
+  /**
+  * 音频编码比特率，选择音频录制时必填。
+
+支持范围：
+
+- AAC编码格式支持比特率范围[32000 - 500000]。
+
+- G711-mulaw编码格式支持比特率范围[64000 - 64000]。
+
+- MP3编码格式支持范围[8000, 16000, 32000, 40000, 48000, 56000, 64000, 80000, 96000, 112000, 128000, 160000, 192000, 224000, 256000, 320000]。
+
+当使用MP3编码格式时，采样率和比特率的映射关系：
+
+- 采样率使用16K以下时，对应比特率范围为[8kbps - 64kbps]。
+
+- 采样率使用16K~32K时对应的比特率范围为[8kbps - 160kbps]。
+
+- 采样率使用32K以上时对应的比特率范围为[32kbps - 320kbps]。
+  */
+  AudioEncodingBitRateHarmony?: number;
+  /**
+   * 支持范围：
+  
+  - AAC编码支持采样率范围[8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000]。
+  
+  - G711-mulaw编码支持采样率范围[8000 - 8000]。
+  
+  - MP3编码支持采样率范围[8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000]。
+   */
+  AudioSamplingRateHarmony?: number;
+  /**
+   * 音频采集声道数
+  
+  - AAC编码格式支持范围[1 - 8]。
+  
+  - G711-mulaw编码格式支持范围[1 - 1]。
+  
+  - MP3编码格式支持范围[1 - 2]
+   */
+  AudioChannelsHarmony?: number;
 }
 
 const pad = (num: number): string => {
@@ -167,9 +235,9 @@ class AudioRecorderPlayer {
   private _playerSubscription: EmitterSubscription;
   private _playerCallback: null | ((event: PlayBackType) => void);
 
-  mmss = (milisecs: number): string => {
-    let secs = Math.floor(milisecs / 1000)
+  mmss = (secs: number): string => {
     let minutes = Math.floor(secs / 60);
+
     secs = secs % 60;
     minutes = minutes % 60;
 
