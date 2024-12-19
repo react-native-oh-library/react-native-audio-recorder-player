@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "react-native-audio-recorder-player",
+        "License": "MIT License",
+        "License File": "https://github.com/hyochan/react-native-audio-recorder-player/blob/main/LICENSE",
+        "Version Number": "3.6.10-0.0.2",
+        "Owner" : "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/hyochan/react-native-audio-recorder-player",
+        "Description": "audio-recorder-player for react-native"
+    }
+]
